@@ -40,7 +40,7 @@ export default function ImageDrop() {
                 height={100}
               />
               <div className="absolute h-full w-full top-0 left-0 bg-black/50 text-center text-white flex items-center flex-col justify-center text-3xl font-semibold">
-                <p>Upload or Drop an image here</p>
+                <p>Upload or Drop Thumbnail here</p>
                 <p>Accepted Format : {fileTypes.join(', ')}</p>
               </div>
             </div>
@@ -52,7 +52,7 @@ export default function ImageDrop() {
                 className="w-full"
               />
               <div className="absolute h-full w-full top-0 left-0 bg-black/50 text-center text-white flex items-center flex-col justify-center text-3xl font-semibold rounded-3xl">
-                <p>Upload or Drop an image here</p>
+                <p>Upload or Drop Thumbnail here</p>
                 <p>Accepted Format : {fileTypes.join(', ')}</p>
               </div>
             </div>
