@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div className="flex flex-row items-center justify-center xl:justify-start gap-2">
-              <Image src={ejyHealthLogo} alt={title} />
+              <Image className="w-10" src={ejyHealthLogo} alt={title} />
               <h1 className="text-2xl font-bold">
                 {title.slice(0, 3)}
                 <span className="text-red-600">{title.slice(3)}</span>

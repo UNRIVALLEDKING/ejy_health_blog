@@ -1,6 +1,7 @@
 import { image2, impressionsIcon, verifiedIcon } from '@/assets/BlogCards';
 import { title } from '@/constants/constant';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HomeCards() {
   return (
@@ -19,7 +20,11 @@ export default function HomeCards() {
         </span>
       </div>
       <h2 className="text-2xl font-semibold my-3">
-        Your health depends on the food you consume.
+        <Link
+          href={`/en/health-practices-of-the-medieval-ages-and-their-evloution`}
+        >
+          Your health depends on the food you consume.
+        </Link>
       </h2>
       <p className="my-2">
         In a world where the pace of life seems to grow increasingly hectic,

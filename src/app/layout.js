@@ -2,12 +2,13 @@ import Nav from '@/components/Navbar/Nav';
 import './globals.css';
 import { Red_Hat_Display } from 'next/font/google';
 import Footer from '@/components/Footer/Footer';
+import { description, title } from '@/constants/constant';
 
 const redHatDisplay = Red_Hat_Display({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Blog - EJY Health',
-  description: 'Official Blog Portal of EJY Health.',
+  title: `Blog - ${title}`,
+  description: description,
 };
 
 export default function RootLayout({ children }) {
