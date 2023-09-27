@@ -29,7 +29,7 @@ export default function Editor() {
     if (currentItemType === 'paragraph' && currentItem) {
       let linkText = currentItem.replace(
         /\[(.*?)\]\((.*?)\)/g,
-        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+        '<a href="$2" target="_blank" class="link" rel="noopener noreferrer">$1</a>'
       );
       let boldText = linkText.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
       let italicText = boldText.replace(/~(.*?)~/g, '<em>$1</em>');
@@ -92,7 +92,7 @@ export default function Editor() {
         onChange={(e) => setTitle(e.target.value)}
       />
 
-      <div className="my-3 gap-2 flex items-center text-base">
+      <div className="my-3 gap-2 flex flex-wrap items-center text-base">
         <span className="border-[#027A48] text-[#027A48] border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
           <Image className="inline" src={verifiedIcon} alt="verified icon" />{' '}
           Verified
