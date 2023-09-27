@@ -17,10 +17,10 @@ export default function Footer() {
               </h1>
             </div>
 
-            <p className="mt-4 max-w-xs text-gray-300 text-center text-2xl font-semibold xl:text-start">
+            <p className="mt-4 max-w-xs text-gray-300 text-2xl font-semibold">
               Unlock the full potential of your health
             </p>
-            <p className="mt-4 max-w-xs text-gray-300 text-center xl:text-start">
+            <p className="mt-4 max-w-xs text-gray-300">
               Get the exclusive early access of the EJY Health by joining the
               waitlist.
             </p>

@@ -24,7 +24,7 @@ const BlogData = [
       },
       {
         type: 'paragraph',
-        text: '<a href="https://youtube.com/@ejyhealth">Click Me!</a> Health is a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity. The enjoyment of the highest attainable standard of health is one of the fundamental rights of every human being without distinction of race, religion, political belief, economic or social condition.Health is a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity. Health is a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity. ',
+        text: '<a class="link" href="https://youtube.com/@ejyhealth">Click Me!</a> Health is a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity. The enjoyment of the highest attainable standard of health is one of the fundamental rights of every human being without distinction of race, religion, political belief, economic or social condition.Health is a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity. Health is a state of complete physical, mental and social well-being and not merely the absence of disease or infirmity. ',
       },
       {
         type: 'h2',

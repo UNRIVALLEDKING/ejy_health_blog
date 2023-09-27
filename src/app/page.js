@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <h2
-        className={`text-3xl text-center xl:text-7xl font-extrabold tracking-wider xl:mb-6`}
+        className={`text-3xl xl:p-20 text-center xl:text-7xl font-extrabold tracking-wider xl:mb-6`}
       >
         Explore Some Health Gyan
       </h2>

@@ -7,15 +7,15 @@ export default function HomeCards() {
   return (
     <div className="p-6 shadow-md rounded-md">
       <Image className="w-full rounded-lg" src={image2} alt={title} />
-      <div className="my-2 gap-2 flex items-center text-base">
-        <span className="border-[#027A48] text-[#027A48] border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
+      <div className="my-2 gap-2 flex flex-wrap items-center text-base">
+        <span className="whitespace-nowrap border-[#027A48] text-[#027A48] border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
           <Image className="inline" src={verifiedIcon} alt="verified icon" />{' '}
           Verified
         </span>
-        <span className="border-stone-700 text-stone-700 border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
+        <span className="whitespace-nowrap border-stone-700 text-stone-700 border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
           Case-Study
         </span>
-        <span className="border-stone-700 text-stone-700 border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
+        <span className="whitespace-nowrap border-stone-700 text-stone-700 border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
           Kid&apos;s Care
         </span>
       </div>

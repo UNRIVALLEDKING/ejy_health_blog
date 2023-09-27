@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 const fileTypes = ['JPEG', 'PNG', 'GIF', 'JPG'];
 
-export default function ImageDrop() {
+export default function ThumbnailImage({ setThumbnailImg }) {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const handleChange = (file) => {
@@ -17,8 +17,10 @@ export default function ImageDrop() {
     if (file) {
       const objectUrl = URL.createObjectURL(file);
       setPreview(objectUrl);
+      setThumbnailImg(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
     }
+    // eslint-disable-next-line
   }, [file]);
 
   return (
@@ -39,7 +41,7 @@ export default function ImageDrop() {
                 width={100}
                 height={100}
               />
-              <div className="absolute h-full w-full top-0 left-0 bg-black/50 text-center text-white flex items-center flex-col justify-center text-3xl font-semibold">
+              <div className="absolute h-full w-full top-0 left-0 bg-black/50 text-center text-white flex items-center flex-col justify-center text-lg xl:text-3xl font-semibold">
                 <p>Upload or Drop Thumbnail here</p>
                 <p>Accepted Format : {fileTypes.join(', ')}</p>
               </div>
@@ -51,7 +53,7 @@ export default function ImageDrop() {
                 alt="Blog Image Thumbnail"
                 className="w-full"
               />
-              <div className="absolute h-full w-full top-0 left-0 bg-black/50 text-center text-white flex items-center flex-col justify-center text-3xl font-semibold rounded-3xl">
+              <div className="absolute h-full w-full top-0 left-0 bg-black/50 text-center text-white flex items-center flex-col justify-center text-lg xl:text-3xl font-semibold rounded-sm xl:rounded-3xl">
                 <p>Upload or Drop Thumbnail here</p>
                 <p>Accepted Format : {fileTypes.join(', ')}</p>
               </div>

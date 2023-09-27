@@ -8,22 +8,8 @@ export default function page({ params }) {
   const pageData = BlogData.find((item) => item.url === blog);
   return (
     <div className="overflow-hidden bg-white text-black md:pb-20">
-      {/* <div className="container relative mx-auto px-4"> */}
-      <div className="w-screen relative mx-auto px-4 flex flex-row gap-x-4">
-        <div className="w-3/5 ml-52">
-          {/* <div className="grid grid-cols-1 items-center px-4 pb-20 xl:pb-10">
-          <div>
-            <h1 className="relative z-10 text-center text-6xl font-bold xl:text-9xl">
-              {pageData.title}
-            </h1>
-            <span className="absolute top-0 w-full transform whitespace-nowrap text-center text-[250px] font-extrabold text-gray-400 opacity-30 blur-[1px] ">
-              {pageData.topic}
-            </span>
-            <p className="mx-auto mt-10 text-center text-base xl:w-2/3 xl:text-2xl">
-              {pageData.desc}
-            </p>
-          </div>
-        </div> */}
+      <div className="container relative mx-auto flex flex-row px-4 xl:gap-x-4">
+        <div className="w-full xl:w-[75%]">
           <div>
             <Image
               className="w-full"
@@ -123,7 +109,7 @@ export default function page({ params }) {
             <p>{pageData.date}</p>
           </div>
         </div>
-        <div className="w-1/5 flex gap-2 flex-col">
+        <div className="hidden xl:w-[25%] xl:flex gap-2 flex-col">
           <HomeCards />
           <HomeCards />
           <HomeCards />
