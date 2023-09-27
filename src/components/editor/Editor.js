@@ -101,7 +101,7 @@ export default function Editor() {
         {selectedTags.map((item, id) => (
           <span
             key={id}
-            className="border-stone-700 text-stone-700 border-solid border-[1px] py-1 px-2 rounded-full"
+            className="border-stone-700 whitespace-nowrap text-stone-700 border-solid border-[1px] py-1 px-2 rounded-full"
           >
             {item}{' '}
             <button className="border-[0.5px] rounded-full px-2 border-gray-600">
