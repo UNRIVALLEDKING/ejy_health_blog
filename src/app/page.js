@@ -16,7 +16,7 @@ export default function Home() {
         <HomeTopics />
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 w-full mt-10">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 w-full mt-10 px-4 xl:px-0">
         <HomeCards />
         <HomeCards />
         <HomeCards />

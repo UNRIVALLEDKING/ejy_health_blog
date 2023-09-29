@@ -1,10 +1,11 @@
+import { MAIN_URL } from '@/constants/constant';
 import { BlogData } from './blogData';
 
 export async function generateMetadata({ params }) {
   const { blog } = params;
   console.log('params', params);
   const data = BlogData.find((item) => item.url === blog);
-  const url = `https://blog.ejyhealth.in/${params.lang}/${blog}`;
+  const url = `${MAIN_URL}${params.lang}/${blog}`;
   return {
     title: data.title,
     description: data.desc,

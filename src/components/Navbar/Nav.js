@@ -12,7 +12,7 @@ export default function Nav() {
     <nav
       className={`${inter.className} z-50 flex bg-white justify-center py-2 items-center fixed top-0 w-full left-0 border-b-[0.5px] border-solid border-black`}
     >
-      <div className="flex justify-between items-center xl:max-w-[80vw] xl:w-full mx-auto">
+      <div className="flex justify-between items-center w-full px-2 xl:px-0 xl:max-w-[80vw] xl:w-full mx-auto">
         <Link href="/" className="flex flex-row items-center gap-2">
           <Image className="w-10" src={ejyHealthLogo} alt={title} />
           <h1 className="text-2xl text-black tracking-wider font-bold">

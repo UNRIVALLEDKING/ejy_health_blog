@@ -2,11 +2,28 @@ import Image from 'next/image';
 import { BlogData } from './blogData';
 import { verifiedIcon } from '@/assets/BlogCards';
 import HomeCards from '@/components/Cards/HomeCards';
-import { BsFacebook, BsLinkedin, BsTwitter, BsWhatsapp } from 'react-icons/bs';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  BsFacebook,
+  BsLinkedin,
+  BsTelegram,
+  // BsMailbox,
+  BsTwitter,
+  BsWhatsapp,
+} from 'react-icons/bs';
+import { HiMail } from 'react-icons/hi';
+import { MAIN_URL } from '@/constants/constant';
+import CopyURL from '@/components/CopyURL';
+import { ToastContainer } from 'react-toastify';
 
 export default function page({ params }) {
   const { blog } = params;
+
+  // console.log('params', params);
   const pageData = BlogData.find((item) => item.url === blog);
+  const blogUrl = encodeURIComponent(
+    MAIN_URL + params.lang + '/' + pageData.url
+  );
   function calculateReadingTime() {
     const wordsPerMinute = 200;
     const content = pageData.content;
@@ -30,11 +47,13 @@ export default function page({ params }) {
 
     return readingTimeMinutes;
   }
+
   const readTime = calculateReadingTime();
   return (
     <div className="bg-white text-black md:pb-20">
+      <ToastContainer />
       <div className="container xl:max-w-[80vw] relative mx-auto flex flex-row px-4 xl:gap-x-4">
-        <div className="w-[80%] xl:max-w-[80vw]">
+        <div className="w-full mx-auto xl:max-w-[80vw]">
           <div>
             <Image
               className="w-full"
@@ -63,18 +82,59 @@ export default function page({ params }) {
             <p className="text-black text-lg xl:text-xl tracking-wider font-medium leading-8">
               {pageData.desc}
             </p>
-            <div className="mt-4 flex justify-between mr-4 text-sm text-gray-500">
+            <div className="mt-4 flex flex-col-reverse xl:flex-row justify-between mr-4 text-sm text-gray-500">
               <div className="flex justify-start items-center gap-3 text-2xl">
                 <a
-                  href={`whatsapp://send?text=Check out this blog post: https://ejy-health-blog.vercel.app/${params.lang}/${pageData.url}`}
+                  href={`whatsapp://send?text=Check out this blog post: ${blogUrl}`}
                   data-action="share/whatsapp/share"
                 >
                   <BsWhatsapp />
                 </a>
 
-                <BsFacebook />
-                <BsTwitter />
-                <BsLinkedin />
+                <a
+                  href={`https://twitter.com/intent/tweet?url=${blogUrl}&text=${pageData.title}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <BsTwitter />
+                </a>
+
+                <a
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${blogUrl}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <BsFacebook />
+                </a>
+
+                {/* <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                    blogUrl
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <BsLinkedin />
+                </a> */}
+                <a
+                  href={`https://t.me/share/url?url=${blogUrl}&text=${pageData.title}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <BsTelegram />
+                </a>
+                <a
+                  href={`mailto:?subject=Check%20out%20this%20blog%20post&body=Check%20out%20this%20blog%20post:%20${blogUrl}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-4xl"
+                >
+                  {/* <BsMailbox /> */}
+                  <HiMail />
+                  {/* <span>Email</span> */}
+                </a>
+
+                <CopyURL url={blogUrl} />
               </div>
               <div className="text-right">
                 <a

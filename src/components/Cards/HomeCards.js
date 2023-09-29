@@ -19,18 +19,18 @@ export default function HomeCards() {
           Kid&apos;s Care
         </span>
       </div>
-      <h2 className="text-xl font-semibold my-3">
+      <h2 className="text-2xl font-semibold my-3">
         <Link
           href={`/en/health-practices-of-the-medieval-ages-and-their-evloution`}
         >
           Your health depends on the food you consume.
         </Link>
       </h2>
-      <p className="my-2 text-sm tracking-tight">
+      <p className="my-2 text-base tracking-tight">
         In a world where the pace of life seems to grow increasingly hectic,
         it&apos;s easy to overlook the profound impact that our dietary choices.
       </p>
-      <div className="mt-2 mb-3 text-xs xl:text-sm">
+      <div className="mt-2 mb-3 text-sm">
         <span>
           3,700 Impressions{' '}
           <Image
@@ -40,7 +40,7 @@ export default function HomeCards() {
           />
         </span>
       </div>
-      <div className="mt-2 text-xs xl:text-sm">
+      <div className="mt-2 text-sm">
         <span>23 August 2023</span> &#x2022; <span>7 min read</span>
       </div>
     </div>
