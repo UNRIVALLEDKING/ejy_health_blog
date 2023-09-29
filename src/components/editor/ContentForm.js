@@ -13,21 +13,21 @@ export default function ContentForm({
           onChange={(e) => setCurrentItem(e.target.value)}
           value={currentItem}
           placeholder="Heading 2"
-          className="outline-none w-full my-3 text-2xl xl:text-5xl font-extrabold tracking-wider xl:mb-6"
+          className="outline-none w-full my-3 text-xl xl:text-4xl font-extrabold tracking-wide xl:mb-6"
         />
       ) : currentItemType === 'h3' ? (
         <textarea
           onChange={(e) => setCurrentItem(e.target.value)}
           value={currentItem}
           placeholder="Heading 3"
-          className="outline-none w-full my-3 text-xl xl:text-4xl font-extrabold tracking-wider xl:mb-6"
+          className="outline-none w-full my-3 text-lg xl:text-3xl font-extrabold tracking-wide xl:mb-6"
         />
       ) : currentItemType === 'paragraph' ? (
         <textarea
           onChange={(e) => setCurrentItem(e.target.value)}
           value={currentItem}
           placeholder="Paragraph use for *Bold* , ~Italic~ & [Link text](Link url)"
-          className="w-full outline-none text-black text-lg xl:text-xl tracking-wider leading-8 my-4"
+          className="w-full outline-none text-black text-base xl:text-lg tracking-wide leading-8 my-4"
         />
       ) : currentItemType === 'list' ? (
         <>
@@ -47,7 +47,7 @@ export default function ContentForm({
             onChange={(e) => setCurrentItem(e.target.value)}
             value={currentItem}
             placeholder="Use # for list"
-            className="w-full outline-none text-black text-lg xl:text-xl tracking-wider leading-8 my-4"
+            className="w-full outline-none text-black text-base xl:text-lg tracking-wide leading-8 my-4"
           />
         </>
       ) : (

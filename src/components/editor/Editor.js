@@ -85,7 +85,7 @@ export default function Editor() {
       )}
       <ThumbnailImage setThumbnailImg={setThumbnailImg} />
       <textarea
-        className="my-3 text-3xl border-x-0 border-t-0 border-gray-200 outline-none whitespace-normal w-full xl:text-6xl font-extrabold tracking-wider xl:mb-6 h-fit overflow-hidden"
+        className="my-3 text-2xl border-x-0 border-t-0 border-gray-200 outline-none whitespace-normal w-full xl:text-5xl font-bold tracking-wider xl:mb-6 h-fit overflow-hidden"
         cols={2}
         placeholder="Enter Title"
         value={title}
@@ -120,15 +120,13 @@ export default function Editor() {
         value={desc}
         onChange={(e) => setDesc(e.target.value)}
         placeholder="Enter short description"
-        className="text-black w-full outline-none text-lg xl:text-2xl tracking-wider font-medium leading-8"
+        className="text-black w-full outline-none text-lg xl:text-xl tracking-wider font-medium leading-8"
       />
-      <div className="mt-4 text-right mr-4 text-base text-gray-500 xl:text-lg font-semibold">
+      <div className="mt-4 text-right mr-4 text-sm text-gray-500 xl:text-base ">
         <p className="mb-2 tracking-wider">EJYhealth</p>
         <span>{newDate}</span> &#x2022; <span>7 min read</span>
       </div>
-      <p className="text-center font-semibold text-gray-500 text-2xl">
-        ~~~~~~~ Blog Content ~~~~~~~
-      </p>
+      <hr className="mt-4" />
 
       <ContentRenderer content={content} />
 

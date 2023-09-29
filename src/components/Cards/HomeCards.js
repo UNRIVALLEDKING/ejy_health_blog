@@ -5,9 +5,9 @@ import Link from 'next/link';
 
 export default function HomeCards() {
   return (
-    <div className="p-6 shadow-md rounded-md">
+    <div className="p-2 2xl:p-6 shadow-md rounded-md">
       <Image className="w-full rounded-lg" src={image2} alt={title} />
-      <div className="my-2 gap-2 flex flex-wrap items-center text-base">
+      <div className="my-2 gap-2 flex flex-wrap items-center text-sm">
         <span className="whitespace-nowrap border-[#027A48] text-[#027A48] border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
           <Image className="inline" src={verifiedIcon} alt="verified icon" />{' '}
           Verified
@@ -19,18 +19,18 @@ export default function HomeCards() {
           Kid&apos;s Care
         </span>
       </div>
-      <h2 className="text-2xl font-semibold my-3">
+      <h2 className="text-xl font-semibold my-3">
         <Link
           href={`/en/health-practices-of-the-medieval-ages-and-their-evloution`}
         >
           Your health depends on the food you consume.
         </Link>
       </h2>
-      <p className="my-2">
+      <p className="my-2 text-sm tracking-tight">
         In a world where the pace of life seems to grow increasingly hectic,
         it&apos;s easy to overlook the profound impact that our dietary choices.
       </p>
-      <div className="mt-2 mb-3">
+      <div className="mt-2 mb-3 text-xs xl:text-sm">
         <span>
           3,700 Impressions{' '}
           <Image
@@ -40,7 +40,7 @@ export default function HomeCards() {
           />
         </span>
       </div>
-      <div className="mt-2">
+      <div className="mt-2 text-xs xl:text-sm">
         <span>23 August 2023</span> &#x2022; <span>7 min read</span>
       </div>
     </div>

@@ -12,14 +12,14 @@ export default function ContentRenderer({ content }) {
           return (
             <p
               key={index}
-              className="text-black text-lg xl:text-xl tracking-wider leading-8 my-4"
+              className="text-black text-base xl:text-lg tracking-wide leading-8 my-4"
               dangerouslySetInnerHTML={renderHTML(item.text)}
             />
           );
         } else if (item.type === 'h2') {
           return (
             <h2
-              className="my-3 text-2xl xl:text-5xl font-extrabold tracking-wider xl:mb-6"
+              className="my-3 text-xl xl:text-4xl font-extrabold tracking-wide xl:mb-6"
               key={index}
             >
               {item.text}
@@ -28,7 +28,7 @@ export default function ContentRenderer({ content }) {
         } else if (item.type === 'h3') {
           return (
             <h3
-              className="my-3 text-xl xl:text-4xl font-extrabold tracking-wider xl:mb-6"
+              className="my-3 text-lg xl:text-3xl font-extrabold tracking-wide xl:mb-6"
               key={index}
             >
               {item.text}
@@ -53,7 +53,7 @@ export default function ContentRenderer({ content }) {
           return (
             <div
               key={index}
-              className="text-black text-lg xl:text-xl tracking-wider leading-8 my-4"
+              className="text-black text-base xl:text-lg tracking-wide leading-8 my-4"
               dangerouslySetInnerHTML={renderHTML(item.text)}
             />
           );

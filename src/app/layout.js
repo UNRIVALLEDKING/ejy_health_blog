@@ -4,7 +4,10 @@ import { Poppins } from 'next/font/google';
 import Footer from '@/components/Footer/Footer';
 import { description, title } from '@/constants/constant';
 
-const poppins = Poppins({ subsets: ['latin'], weight: '400' });
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
+});
 
 export const metadata = {
   title: `Blog - ${title}`,
