@@ -66,7 +66,7 @@ export default function page({ params }) {
             <div className="mt-4 flex justify-between mr-4 text-sm text-gray-500">
               <div className="flex justify-start items-center gap-3 text-2xl">
                 <a
-                  href={`whatsapp://send?text=Check out this blog post: https://blog.ejyhealth.in/${params.lang}/${pageData.url}`}
+                  href={`whatsapp://send?text=Check out this blog post: https://ejy-health-blog.vercel.app/${params.lang}/${pageData.url}`}
                   data-action="share/whatsapp/share"
                 >
                   <BsWhatsapp />
