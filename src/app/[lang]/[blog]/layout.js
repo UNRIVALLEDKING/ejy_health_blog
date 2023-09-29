@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
     date: data.date,
     openGraph: {
       images: [
-        'https://blog.ejyhealth.in/_next/static/media/pic2.c5a3beb4.svg',
+        'https://blog.ejyhealth.in/_next/static/media/pic2.c5a3beb4.svg?v1',
       ],
       url: url,
       title: data.title,
