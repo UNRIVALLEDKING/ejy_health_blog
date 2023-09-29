@@ -31,7 +31,7 @@ export default function page({ params }) {
   }
   const readTime = calculateReadingTime();
   return (
-    <div className="overflow-hidden bg-white text-black md:pb-20">
+    <div className="bg-white text-black md:pb-20">
       <div className="container xl:max-w-[80vw] relative mx-auto flex flex-row px-4 xl:gap-x-4">
         <div className="w-[80%] xl:max-w-[80vw]">
           <div>
