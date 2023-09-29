@@ -12,7 +12,7 @@ const BlogData = [
     url: 'health-practices-of-the-medieval-ages-and-their-evloution',
     date: '2023-09-24',
     author: 'EJYhealth',
-    ogImage: image1,
+    ogImage: blogThumbnail,
     authorUrl: 'https://ejyhealth.in',
     keywords: ['ejyhealth', 'ejy health', 'health practises'],
     content: [

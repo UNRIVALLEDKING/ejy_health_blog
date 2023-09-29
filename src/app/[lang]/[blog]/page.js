@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { BlogData } from './blogData';
 import { verifiedIcon } from '@/assets/BlogCards';
 import HomeCards from '@/components/Cards/HomeCards';
+import { BsFacebook, BsLinkedin, BsTwitter, BsWhatsapp } from 'react-icons/bs';
 
 export default function page({ params }) {
   const { blog } = params;
@@ -62,17 +63,31 @@ export default function page({ params }) {
             <p className="text-black text-lg xl:text-xl tracking-wider font-medium leading-8">
               {pageData.desc}
             </p>
-            <div className="mt-4 text-right mr-4 text-sm text-gray-500">
-              <a
-                href={pageData.authorUrl}
-                target="_blank"
-                className="link text-sm"
-              >
-                {pageData.author}
-              </a>
-              <p>
-                24 August 2023 &#x2022; <span>{readTime} min read</span>
-              </p>
+            <div className="mt-4 flex justify-between mr-4 text-sm text-gray-500">
+              <div className="flex justify-start items-center gap-3 text-2xl">
+                <a
+                  href={`whatsapp://send?text=Check out this blog post: https://blog.ejyhealth.in/${params.lang}/${pageData.url}`}
+                  data-action="share/whatsapp/share"
+                >
+                  <BsWhatsapp />
+                </a>
+
+                <BsFacebook />
+                <BsTwitter />
+                <BsLinkedin />
+              </div>
+              <div className="text-right">
+                <a
+                  href={pageData.authorUrl}
+                  target="_blank"
+                  className="link text-sm"
+                >
+                  {pageData.author}
+                </a>
+                <p>
+                  24 August 2023 &#x2022; <span>{readTime} min read</span>
+                </p>
+              </div>
             </div>
           </div>
 
