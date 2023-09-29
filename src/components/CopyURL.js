@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 
 export default function CopyURL({ url }) {
   const copy = () => {
-    navigator.clipboard.writeText(url);
+    const newUrl = decodeURIComponent(url);
+    navigator.clipboard.writeText(newUrl);
     toast('Copied to clipboard');
   };
   return (
