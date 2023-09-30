@@ -15,17 +15,20 @@ export default function Nav() {
       <div className="flex justify-between items-center w-full px-2 xl:px-0 xl:max-w-[80vw] xl:w-full mx-auto">
         <Link href="/" className="flex flex-row items-center gap-2">
           <Image className="w-10" src={ejyHealthLogo} alt={title} />
-          <h1 className="text-2xl text-black tracking-wider font-bold">
+          <h1 className="text-2xl text-black tracking-wider font-semibold">
             {title.slice(0, 3)}
             <span className="text-red-600">{title.slice(3)}</span>
           </h1>
         </Link>
+        {/* <Link href="/">
+          <Image className="w-40" src={largeLogo} alt={title} />
+        </Link> */}
         <div className="hidden xl:flex gap-2 2xl:gap-6 text-xl">
           {navMenu.map((item) => (
             <Link
               key={item.id}
               href={item.url}
-              className={`text-xl ${
+              className={`text-xl border-b-[1px] border-b-transparent hover:border-black transition-all duration-200 ${
                 item.title === 'Blogs'
                   ? 'text-red-600'
                   : 'text-black hover:text-black'

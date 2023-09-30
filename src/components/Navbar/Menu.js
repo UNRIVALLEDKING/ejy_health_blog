@@ -6,23 +6,23 @@ const navMenu = [
   },
   {
     id: 1,
-    title: 'Community',
-    url: 'https://ejyhealth.in/community',
-  },
-  {
-    id: 2,
     title: 'Events',
     url: 'https://ejyhealth.in/events',
   },
   {
+    id: 2,
+    title: 'Community',
+    url: 'https://ejyhealth.in/community',
+  },
+  {
     id: 3,
-    title: 'Blogs',
-    url: '/',
+    title: 'Career',
+    url: 'https://ejyhealth.in/career',
   },
   {
     id: 4,
-    title: 'About Us',
-    url: 'https://ejyhealth.in/about-us',
+    title: 'Blog',
+    url: '/',
   },
 ];
 export default navMenu;
