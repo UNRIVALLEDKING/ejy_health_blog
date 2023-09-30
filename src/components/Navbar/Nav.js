@@ -29,7 +29,7 @@ export default function Nav() {
               key={item.id}
               href={item.url}
               className={`text-xl border-b-[1px] border-b-transparent hover:border-black transition-all duration-200 ${
-                item.title === 'Blogs'
+                item.title === 'Blog'
                   ? 'text-red-600'
                   : 'text-black hover:text-black'
               }`}
