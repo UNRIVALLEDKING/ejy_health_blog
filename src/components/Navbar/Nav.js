@@ -1,18 +1,19 @@
-import { ejyHealthLogo, largeLogo } from '@/assets';
+import { ejyHealthLogo } from '@/assets';
 import { title } from '@/constants/constant';
 import Image from 'next/image';
 import Link from 'next/link';
 import navMenu from './Menu';
 import { Inter } from 'next/font/google';
+import Hamburger from './Hamburger';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Nav() {
   return (
     <nav
-      className={`${inter.className} z-50 flex bg-white justify-center py-2 items-center fixed top-0 w-full left-0 border-b-[0.5px] border-solid border-black`}
+      className={`${inter.className} z-50 flex bg-white justify-center py-2 items-center fixed top-0 w-full left-0 xl:border-b-[0.5px] xl:border-solid xl:border-black`}
     >
-      <div className="flex justify-between items-center w-full px-2 xl:px-0 xl:max-w-[80vw] xl:w-full mx-auto">
+      <div className="hidden xl:flex justify-between items-center w-full px-2 xl:px-0 xl:max-w-[80vw] xl:w-full mx-auto">
         <Link href="/" className="flex flex-row items-center gap-2">
           <Image className="w-10" src={ejyHealthLogo} alt={title} />
           <h1 className="text-2xl text-black tracking-wider font-semibold">
@@ -23,7 +24,7 @@ export default function Nav() {
         {/* <Link href="/">
           <Image className="w-40" src={largeLogo} alt={title} />
         </Link> */}
-        <div className="hidden xl:flex gap-2 2xl:gap-6 text-xl">
+        <div className="flex gap-2 2xl:gap-6 text-xl">
           {navMenu.map((item) => (
             <Link
               key={item.id}
@@ -41,6 +42,18 @@ export default function Nav() {
         <button className="bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2">
           Join Waitlist
         </button>
+      </div>
+      <div className="flex xl:hidden w-full px-2 justify-between items-center">
+        <Link href="/" className="flex flex-row items-center gap-2">
+          <Image className="w-10" src={ejyHealthLogo} alt={title} />
+          <h1 className="text-2xl text-black tracking-wider font-semibold">
+            {title.slice(0, 3)}
+            <span className="text-red-600">{title.slice(3)}</span>
+          </h1>
+        </Link>
+        <div>
+          <Hamburger />
+        </div>
       </div>
     </nav>
   );
