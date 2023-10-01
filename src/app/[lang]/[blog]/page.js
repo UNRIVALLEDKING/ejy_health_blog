@@ -15,6 +15,7 @@ import { HiMail } from 'react-icons/hi';
 import { MAIN_URL } from '@/constants/constant';
 import CopyURL from '@/components/CopyURL';
 import { ToastContainer } from 'react-toastify';
+import { ejyHealthLogo } from '@/assets';
 
 export default function page({ params }) {
   const { blog } = params;
@@ -50,7 +51,7 @@ export default function page({ params }) {
 
   const readTime = calculateReadingTime();
   return (
-    <div className="bg-white text-black md:pb-20">
+    <div className={`text-black bg-transparent md:pb-20 blogMain`}>
       <ToastContainer />
       <div className="container xl:max-w-[80vw] relative mx-auto flex flex-row px-4 xl:gap-x-4">
         <div className="w-full mx-auto xl:max-w-[80vw]">

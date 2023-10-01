@@ -5,3 +5,26 @@
 .link {
   color: #0052d7;
 }
+
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+.blogMain::before {
+  content: '';
+  background: url(../assets/ejy_health_Watermark.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
+}
