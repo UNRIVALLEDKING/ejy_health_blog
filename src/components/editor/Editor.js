@@ -18,6 +18,7 @@ export default function Editor() {
   const [currentItem, setCurrentItem] = useState('');
   const [currentItemType, setCurrentItemType] = useState('');
   const [listType, setListType] = useState('lower-roman');
+  const [formData, setFormData] = useState({});
 
   let newDate = new Date().toLocaleString('en-US', {
     day: 'numeric',
@@ -26,6 +27,15 @@ export default function Editor() {
   });
 
   const handleAddItem = () => {
+    const tempFormData = {
+      title: title,
+      desc: desc,
+      ThumbnailImage: thumbnailImg,
+      content: content,
+      author: 'Ejy health',
+      keywords: selectedTags,
+    };
+
     if (currentItemType === 'paragraph' && currentItem) {
       let linkText = currentItem.replace(
         /\[(.*?)\]\((.*?)\)/g,
@@ -58,6 +68,8 @@ export default function Editor() {
         setCurrentItem('');
       }
     }
+    setFormData(tempFormData, { content: content });
+    console.log('formData', formData);
   };
 
   const handleTags = (e) => {
@@ -71,6 +83,19 @@ export default function Editor() {
 
   console.log('blog data', content);
 
+  function handlePublish(e) {
+    e.preventDefault();
+    const tempFormData = {
+      title: title,
+      desc: desc,
+      ThumbnailImage: thumbnailImg,
+      content: content,
+      author: 'Ejy health',
+      keywords: selectedTags,
+    };
+    setFormData(tempFormData);
+    console.log('data', tempFormData);
+  }
   return (
     <>
       {currentItemType === 'image' ? (
@@ -128,7 +153,7 @@ export default function Editor() {
       </div>
       <hr className="mt-4" />
 
-      <ContentRenderer content={content} />
+      <ContentRenderer content={content} setContent={setContent} />
 
       {/* Blog Editor */}
       <ContentForm
@@ -143,7 +168,10 @@ export default function Editor() {
       {/* Content Format selector dashboard */}
       <EditorDashboard setCurrentItemType={setCurrentItemType} />
       <div className="text-right">
-        <button className="bg-[#ff0000] mt-4 hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2">
+        <button
+          onClick={handlePublish}
+          className="bg-[#ff0000] mt-4 hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2"
+        >
           Publish
         </button>
       </div>

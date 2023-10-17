@@ -9,8 +9,9 @@ import {
 } from 'react-icons/bs';
 
 const title = 'EJYhealth';
-
 const MAIN_URL = 'https://blog.ejyhealth.in/';
+
+const TEST_API = 'http://localhost:8080';
 
 const description =
   "EJY Health is establishing a global platform where doctors, nurses, patients, and the general public can seamlessly interact and benefit from one another's expertise. We're addressing gaps in the Health & wellness industry on a large scale, connecting people from diverse backgrounds and professions to foster collective growth and learning.";
@@ -53,4 +54,4 @@ const SNSData = [
     icon: <BsReddit />,
   },
 ];
-export { title, description, SNSData, MAIN_URL };
+export { title, description, SNSData, MAIN_URL, TEST_API };
