@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-import { BiEdit } from 'react-icons/bi';
+import { BiEdit className="cursor-pointer" } from 'react-icons/bi';
 import ContentEditModal from './ContentEditModal';
 export default function ContentRenderer({ content, setContent }) {
   const [editData, setEditData] = useState(false);
@@ -35,7 +35,7 @@ export default function ContentRenderer({ content, setContent }) {
                 className="xl:max-w-[95%] text-black text-base xl:text-lg tracking-wide leading-8 my-4"
                 dangerouslySetInnerHTML={renderHTML(item.text)}
               />
-              <BiEdit onClick={() => editContent(index)} size={30} />
+              <BiEdit className="cursor-pointer" onClick={() => editContent(index)} size={30} />
             </div>
           );
         } else if (item.type === 'h2') {
@@ -44,7 +44,7 @@ export default function ContentRenderer({ content, setContent }) {
               <h2 className="xl:max-w-[95%] my-3 text-xl xl:text-4xl font-extrabold tracking-wide xl:mb-6">
                 {item.text}
               </h2>
-              <BiEdit onClick={() => editContent(index)} size={30} />
+              <BiEdit className="cursor-pointer" onClick={() => editContent(index)} size={30} />
             </div>
           );
         } else if (item.type === 'h3') {
@@ -53,7 +53,7 @@ export default function ContentRenderer({ content, setContent }) {
               <h3 className="my-3 text-lg xl:text-3xl font-extrabold tracking-wide xl:mb-6">
                 {item.text}
               </h3>
-              <BiEdit onClick={() => editContent(index)} size={30} />
+              <BiEdit className="cursor-pointer" onClick={() => editContent(index)} size={30} />
             </div>
           );
         } else if (item.type === 'image') {
@@ -78,7 +78,7 @@ export default function ContentRenderer({ content, setContent }) {
                 className="text-black text-base xl:text-lg tracking-wide leading-8 my-4"
                 dangerouslySetInnerHTML={renderHTML(item.text)}
               />{' '}
-              <BiEdit onClick={() => editContent(index)} size={30} />
+              <BiEdit className="cursor-pointer" onClick={() => editContent(index)} size={30} />
             </div>
           );
         }
