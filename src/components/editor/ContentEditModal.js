@@ -18,7 +18,7 @@ export default function ContentEditModal({
       updatedContent[editData] = newData;
       setContent(updatedContent);
     }
-    setEditData(false);
+    setEditData(null);
   };
 
   console.log('newcon', newData);
