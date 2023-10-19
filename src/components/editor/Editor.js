@@ -20,11 +20,14 @@ export default function Editor() {
   const [listType, setListType] = useState('lower-roman');
   const [formData, setFormData] = useState({});
 
-  const userData =
-    JSON.parse(localStorage.getItem('userData')) ||
-    JSON.parse(sessionStorage.getItem('userData'));
-  const id = localStorage.getItem('id') || sessionStorage.getItem('id');
-  const authorData = { fullname: userData.fullname, id: id };
+  const userData = () => {
+    if (typeof window !== 'undefined') {
+      JSON.parse(localStorage.getItem('userData')) ||
+        JSON.parse(sessionStorage.getItem('userData'));
+      const id = localStorage.getItem('id') || sessionStorage.getItem('id');
+      return { fullname: userData.fullname, id: id };
+    }
+  };
 
   let newDate = new Date().toLocaleString('en-US', {
     day: 'numeric',
@@ -32,14 +35,14 @@ export default function Editor() {
     year: 'numeric',
   });
 
-  const userId = localStorage.getItem('id') || sessionStorage.getItem('id');
+  // const userId = localStorage.getItem('id') || sessionStorage.getItem('id');
   const handleAddItem = () => {
     const tempFormData = {
       title: title,
       desc: desc,
       Thumbnail: 'thumbnailImg',
       content: content,
-      user: userId,
+      user: userData.id,
       tags: selectedTags,
       category: 'default',
     };
@@ -97,7 +100,7 @@ export default function Editor() {
       desc: desc,
       ThumbnailImage: 'https://files.catbox.moe/mug3bj.png',
       body: content,
-      author: authorData,
+      author: userData,
       keywords: selectedTags,
     };
     setFormData(tempFormData);
@@ -186,7 +189,7 @@ export default function Editor() {
         className="text-black w-full outline-none text-lg xl:text-xl tracking-wider font-medium leading-8"
       />
       <div className="mt-4 text-right mr-4 text-sm text-gray-500 xl:text-base ">
-        <p className="mb-2 tracking-wider">{authorData.fullname}</p>
+        <p className="mb-2 tracking-wider">{userData.fullname}</p>
         <span>{newDate}</span> &#x2022; <span>{readTime} min read</span>
       </div>
       <hr className="mt-4" />
