@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { BlogData } from './blogData';
 import { verifiedIcon } from '@/assets/BlogCards';
 import HomeCards from '@/components/Cards/HomeCards';
-import 'react-toastify/dist/ReactToastify.css';
+
 import {
   BsFacebook,
   BsLinkedin,

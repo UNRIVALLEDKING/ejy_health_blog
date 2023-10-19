@@ -24,10 +24,5 @@ const navMenu = [
     title: 'Blog',
     url: '/',
   },
-  {
-    id: 5,
-    title: 'Login',
-    url: '/login',
-  },
 ];
 export default navMenu;

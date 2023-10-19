@@ -2,23 +2,10 @@ import HomeCards from '@/components/Cards/HomeCards';
 import FAQ from '@/components/FAQ/FAQ';
 import LangSelect from '@/components/Languages/LangSelect';
 import HomeTopics from '@/components/Topics/HomeTopics';
-import { TEST_API } from '@/constants/constant';
-
-async function getData() {
-  console.log('url', TEST_API + '/blog');
-  try {
-    const res = await fetch(TEST_API + '/blog');
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
-    return res.json();
-  } catch (err) {
-    return { error: err };
-  }
-}
+import { GetRequest } from '@/constants/functions';
 
 export default async function Home() {
-  const blogData = await getData();
+  const blogData = await GetRequest('/p/all');
   console.log('data', blogData);
   return (
     <>

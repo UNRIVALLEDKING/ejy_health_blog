@@ -49,13 +49,14 @@ export default function Hamburger() {
             {item.title}
           </Link>
         ))}
-        <button
+        <Link
+          href={'/login'}
           className={`bg-[#ff0000] ${
             toggle ? 'opacity-100 transition-all delay-150' : 'opacity-0'
           } hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2`}
         >
-          Join Waitlist
-        </button>
+          Login
+        </Link>
       </div>
     </div>
   );

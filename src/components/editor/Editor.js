@@ -20,20 +20,28 @@ export default function Editor() {
   const [listType, setListType] = useState('lower-roman');
   const [formData, setFormData] = useState({});
 
+  const userData =
+    JSON.parse(localStorage.getItem('userData')) ||
+    JSON.parse(sessionStorage.getItem('userData'));
+  const id = localStorage.getItem('id') || sessionStorage.getItem('id');
+  const authorData = { fullname: userData.fullname, id: id };
+
   let newDate = new Date().toLocaleString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   });
 
+  const userId = localStorage.getItem('id') || sessionStorage.getItem('id');
   const handleAddItem = () => {
     const tempFormData = {
       title: title,
       desc: desc,
-      ThumbnailImage: thumbnailImg,
+      Thumbnail: 'thumbnailImg',
       content: content,
-      author: 'Ejy health',
-      keywords: selectedTags,
+      user: userId,
+      tags: selectedTags,
+      category: 'default',
     };
 
     if (currentItemType === 'paragraph' && currentItem) {
@@ -69,9 +77,7 @@ export default function Editor() {
       }
     }
     setFormData(tempFormData, { content: content });
-    console.log('formData', formData);
   };
-
   const handleTags = (e) => {
     const string = e.target.value;
     const array = string
@@ -85,17 +91,49 @@ export default function Editor() {
 
   function handlePublish(e) {
     e.preventDefault();
+
     const tempFormData = {
       title: title,
       desc: desc,
-      ThumbnailImage: thumbnailImg,
-      content: content,
-      author: 'Ejy health',
+      ThumbnailImage: 'https://files.catbox.moe/mug3bj.png',
+      body: content,
+      author: authorData,
       keywords: selectedTags,
     };
     setFormData(tempFormData);
     console.log('data', tempFormData);
   }
+
+  function calculateReadTime(content) {
+    const readingSpeed = 80; // words per minute
+    const listItems = content
+      .filter((item) => item.type === 'list')
+      .map((item) => {
+        const parsedItem = item.text.replace(/<[^>]*>/g, '');
+        console.log('list parsed', parsedItem);
+        return parsedItem;
+      });
+
+    const paragraphs = content
+      .filter((item) => item.type === 'paragraph')
+      .map((item) => {
+        const parsedItem = item.text.replace(/<[^>]*>/g, '');
+        console.log('para parsed', parsedItem);
+        return parsedItem;
+      });
+
+    const totalWords =
+      listItems.join(' ').split(' ').length +
+      paragraphs.join(' ').split(' ').length;
+
+    const readTimeInMinutes = totalWords / readingSpeed;
+
+    const readTimeInMinutesRoundedUp = Math.ceil(readTimeInMinutes);
+
+    return readTimeInMinutesRoundedUp;
+  }
+  const readTime = calculateReadTime(content);
+
   return (
     <>
       {currentItemType === 'image' ? (
@@ -148,8 +186,8 @@ export default function Editor() {
         className="text-black w-full outline-none text-lg xl:text-xl tracking-wider font-medium leading-8"
       />
       <div className="mt-4 text-right mr-4 text-sm text-gray-500 xl:text-base ">
-        <p className="mb-2 tracking-wider">EJYhealth</p>
-        <span>{newDate}</span> &#x2022; <span>7 min read</span>
+        <p className="mb-2 tracking-wider">{authorData.fullname}</p>
+        <span>{newDate}</span> &#x2022; <span>{readTime} min read</span>
       </div>
       <hr className="mt-4" />
 

@@ -1,3 +1,4 @@
+'use client';
 import { ejyHealthLogo } from '@/assets';
 import { title } from '@/constants/constant';
 import Image from 'next/image';
@@ -5,10 +6,24 @@ import Link from 'next/link';
 import navMenu from './Menu';
 import { Inter } from 'next/font/google';
 import Hamburger from './Hamburger';
+import { useEffect, useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Nav() {
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  useEffect(() => {
+    const token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
+    const userData = localStorage.getItem('userData');
+    const id = localStorage.getItem('id') || sessionStorage.getItem('id');
+    if (token) {
+      setIsLoggedIn({ id: id, user: JSON.parse(userData) });
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
   return (
     <nav
       className={`${inter.className} z-50 flex bg-white justify-center py-2 items-center fixed top-0 w-full left-0 xl:border-b-[0.5px] xl:border-solid xl:border-black`}
@@ -39,9 +54,21 @@ export default function Nav() {
             </Link>
           ))}
         </div>
-        <button className="bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2">
-          Join Waitlist
-        </button>
+        {isLoggedIn ? (
+          <Link
+            href={`/profile/${isLoggedIn.id}`}
+            className="bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2"
+          >
+            {isLoggedIn.user.fullname}
+          </Link>
+        ) : (
+          <Link
+            className="bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2"
+            href={'/login'}
+          >
+            Login
+          </Link>
+        )}
       </div>
       <div className="flex xl:hidden w-full px-2 justify-between items-center">
         <Link href="/" className="flex flex-row items-center gap-2">
