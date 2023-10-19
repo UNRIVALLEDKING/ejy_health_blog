@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ContentForm from './ContentForm';
 import ContentRenderer from './ContentRenderer';
 import EditorDashboard from './EditorDashboard';
@@ -19,15 +19,7 @@ export default function Editor() {
   const [currentItemType, setCurrentItemType] = useState('');
   const [listType, setListType] = useState('lower-roman');
   const [formData, setFormData] = useState({});
-
-  const userData = () => {
-    if (typeof window !== 'undefined') {
-      JSON.parse(localStorage.getItem('userData')) ||
-        JSON.parse(sessionStorage.getItem('userData'));
-      const id = localStorage.getItem('id') || sessionStorage.getItem('id');
-      return { fullname: userData.fullname, id: id };
-    }
-  };
+  const [userData, setUserData] = useState(null);
 
   let newDate = new Date().toLocaleString('en-US', {
     day: 'numeric',
@@ -137,6 +129,13 @@ export default function Editor() {
   }
   const readTime = calculateReadTime(content);
 
+  useEffect(() => {
+    const user =
+      JSON.parse(localStorage.getItem('userData')) ||
+      JSON.parse(sessionStorage.getItem('userData'));
+    const id = localStorage.getItem('id') || sessionStorage.getItem('id');
+    setUserData({ fullname: user.fullname, id: id });
+  }, []);
   return (
     <>
       {currentItemType === 'image' ? (
@@ -189,7 +188,7 @@ export default function Editor() {
         className="text-black w-full outline-none text-lg xl:text-xl tracking-wider font-medium leading-8"
       />
       <div className="mt-4 text-right mr-4 text-sm text-gray-500 xl:text-base ">
-        <p className="mb-2 tracking-wider">{userData.fullname}</p>
+        <p className="mb-2 tracking-wider">{userData?.fullname}</p>
         <span>{newDate}</span> &#x2022; <span>{readTime} min read</span>
       </div>
       <hr className="mt-4" />
