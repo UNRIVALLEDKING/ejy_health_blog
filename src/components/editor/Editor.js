@@ -141,7 +141,7 @@ export default function Editor() {
     if (user) {
       setUserData({ fullname: user.fullname, id: id });
     } else {
-      toast('login to create blog');
+      toast.warning('login to create blog');
       router.push('/login');
     }
   }, []);
