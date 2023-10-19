@@ -8,6 +8,8 @@ import ThumbnailImage from './ThumbnailImage';
 import Image from 'next/image';
 import { verifiedIcon } from '@/assets/BlogCards';
 import ImageUploadModal from './ImageUploadModal';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 export default function Editor() {
   const [title, setTitle] = useState('');
@@ -20,6 +22,8 @@ export default function Editor() {
   const [listType, setListType] = useState('lower-roman');
   const [formData, setFormData] = useState({});
   const [userData, setUserData] = useState(null);
+
+  const router = useRouter();
 
   let newDate = new Date().toLocaleString('en-US', {
     day: 'numeric',
@@ -134,7 +138,12 @@ export default function Editor() {
       JSON.parse(localStorage.getItem('userData')) ||
       JSON.parse(sessionStorage.getItem('userData'));
     const id = localStorage.getItem('id') || sessionStorage.getItem('id');
-    setUserData({ fullname: user.fullname, id: id });
+    if (user) {
+      setUserData({ fullname: user.fullname, id: id });
+    } else {
+      toast('login to create blog');
+      router.push('/login');
+    }
   }, []);
   return (
     <>
