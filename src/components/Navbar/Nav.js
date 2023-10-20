@@ -11,12 +11,11 @@ import { useEffect, useState } from 'react';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Nav() {
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState([]);
   useEffect(() => {
-    const token =
-      localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     const userData = localStorage.getItem('userData');
-    const id = localStorage.getItem('id') || sessionStorage.getItem('id');
+    const id = localStorage.getItem('id');
     if (token) {
       setIsLoggedIn({ id: id, user: JSON.parse(userData) });
     } else {
@@ -54,12 +53,12 @@ export default function Nav() {
             </Link>
           ))}
         </div>
-        {isLoggedIn ? (
+        {isLoggedIn?.user ? (
           <Link
-            href={`/profile/${isLoggedIn.id}`}
+            href={`/profile/${isLoggedIn?.id}`}
             className="bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2"
           >
-            {isLoggedIn.user.fullname}
+            {isLoggedIn?.user.fullname}
           </Link>
         ) : (
           <Link

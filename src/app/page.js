@@ -6,7 +6,7 @@ import { GetRequest } from '@/constants/functions';
 
 export default async function Home() {
   const blogData = await GetRequest('/p/all');
-  console.log('data', blogData);
+  console.log('data', blogData.fetchData.posts);
   return (
     <>
       <h2
@@ -20,9 +20,9 @@ export default async function Home() {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 w-full mt-10 px-4 xl:px-0">
-        {/* {blogData?.map((item, id) => (
+        {blogData?.fetchData.posts.map((item, id) => (
           <HomeCards key={id} item={item} />
-        ))} */}
+        ))}
         <HomeCards />
         <HomeCards />
         <HomeCards />

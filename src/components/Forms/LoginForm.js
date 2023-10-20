@@ -29,17 +29,20 @@ export default function LoginForm() {
     console.log('res', res);
 
     if (res.status === 200) {
-      if (rememberMe) {
-        localStorage.setItem('id', res.data.userId);
-        localStorage.setItem('token', res.data.accessToken);
-        toast.success('Login Successfully');
-        router.push(`/profile/${res.data.userId}`);
-      } else {
-        sessionStorage.setItem('id', res.data.userId);
-        sessionStorage.setItem('token', res.data.accessToken);
-        toast.success('Login Successfully');
-        router.push(`/profile/${res.data.userId}`);
-      }
+      // if (rememberMe) {
+      //   localStorage.setItem('id', res.data.userId);
+      //   localStorage.setItem('token', res.data.accessToken);
+      //   toast.success('Login Successfully');
+      //   router.push(`/profile/${res.data.userId}`);
+      // } else {
+      //   sessionStorage.setItem('id', res.data.userId);
+      //   sessionStorage.setItem('token', res.data.accessToken);
+      //   toast.success('Login Successfully');
+      //   router.push(`/profile/${res.data.userId}`);
+      // }
+      localStorage.setItem('id', res.data.userId);
+      localStorage.setItem('token', res.data.accessToken);
+      router.push(`/profile/${res.data.userId}`);
     } else {
       alert(res.data.message);
     }

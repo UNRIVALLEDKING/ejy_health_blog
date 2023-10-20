@@ -1,4 +1,5 @@
 import { blogThumbnail } from '@/assets';
+import { title } from '@/constants/constant';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
@@ -12,7 +13,7 @@ export default function ImageUploadModal({
   content,
 }) {
   const [file, setFile] = useState(null);
-  const [altText, setAltText] = useState('');
+  const [caption, setCaption] = useState('');
   const [preview, setPreview] = useState(null);
   const handleChange = (file) => {
     setFile(file);
@@ -30,7 +31,13 @@ export default function ImageUploadModal({
       const objectUrl = URL.createObjectURL(file);
       setContent([
         ...content,
-        { type: 'image', data: { src: objectUrl, alt: altText } },
+        {
+          type: 'image',
+          data: {
+            src: objectUrl,
+            caption: caption,
+          },
+        },
       ]);
       setCurrentItem('');
       setCurrentItemType('');
@@ -76,8 +83,8 @@ export default function ImageUploadModal({
         </FileUploader>
 
         <textarea
-          placeholder="alt text"
-          onChange={(e) => setAltText(e.target.value)}
+          placeholder="Caption"
+          onChange={(e) => setCaption(e.target.value)}
           className="text-black w-full outline-none text-lg xl:text-xl tracking-wider leading-8 my-4"
         ></textarea>
         <div className="flex gap-4 justify-end mt-4">

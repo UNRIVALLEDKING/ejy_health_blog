@@ -10,6 +10,7 @@ import { verifiedIcon } from '@/assets/BlogCards';
 import ImageUploadModal from './ImageUploadModal';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { PostRequest, calculateReadTime } from '@/constants/functions';
 
 export default function Editor() {
   const [title, setTitle] = useState('');
@@ -40,7 +41,7 @@ export default function Editor() {
       content: content,
       user: userData.id,
       tags: selectedTags,
-      category: 'default',
+      category: '653289882d082f726fee5849',
     };
 
     if (currentItemType === 'paragraph' && currentItem) {
@@ -88,58 +89,48 @@ export default function Editor() {
 
   console.log('blog data', content);
 
-  function handlePublish(e) {
+  async function handlePublish(e) {
     e.preventDefault();
 
     const tempFormData = {
       title: title,
       desc: desc,
-      ThumbnailImage: 'https://files.catbox.moe/mug3bj.png',
+      thumbnail: 'https://files.catbox.moe/mug3bj.png',
       body: content,
-      author: userData,
+      user: userData.id,
       keywords: selectedTags,
     };
     setFormData(tempFormData);
-    console.log('data', tempFormData);
+    console.log('form data', tempFormData);
+    try {
+      const postData = await PostRequest(
+        '/admin/blogs/create-post',
+        tempFormData,
+        userData.token
+      );
+      if (postData.status === 201) {
+        toast.success('blog uploaded');
+        router.push('/');
+      } else {
+        console.log('res', postData);
+      }
+    } catch (err) {
+      console.log('err', err);
+    }
+    // console.log('data', tempFormData);
   }
 
-  function calculateReadTime(content) {
-    const readingSpeed = 80; // words per minute
-    const listItems = content
-      .filter((item) => item.type === 'list')
-      .map((item) => {
-        const parsedItem = item.text.replace(/<[^>]*>/g, '');
-        console.log('list parsed', parsedItem);
-        return parsedItem;
-      });
-
-    const paragraphs = content
-      .filter((item) => item.type === 'paragraph')
-      .map((item) => {
-        const parsedItem = item.text.replace(/<[^>]*>/g, '');
-        console.log('para parsed', parsedItem);
-        return parsedItem;
-      });
-
-    const totalWords =
-      listItems.join(' ').split(' ').length +
-      paragraphs.join(' ').split(' ').length;
-
-    const readTimeInMinutes = totalWords / readingSpeed;
-
-    const readTimeInMinutesRoundedUp = Math.ceil(readTimeInMinutes);
-
-    return readTimeInMinutesRoundedUp;
-  }
   const readTime = calculateReadTime(content);
 
   useEffect(() => {
     const user =
       JSON.parse(localStorage.getItem('userData')) ||
       JSON.parse(sessionStorage.getItem('userData'));
-    const id = localStorage.getItem('id') || sessionStorage.getItem('id');
+    const id = localStorage.getItem('id');
+    const token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
     if (user) {
-      setUserData({ fullname: user.fullname, id: id });
+      setUserData({ fullname: user.fullname, id: id, token: token });
     } else {
       toast.warning('login to create blog');
       router.push('/login');
