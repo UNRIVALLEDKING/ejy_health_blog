@@ -15,7 +15,8 @@ body {
   user-select: none;
 }
 
-.blogMain::before {
+/* Blog page watermark */
+/* .blogMain::before {
   content: '';
   background: url(../assets/ejy_health_Watermark.svg);
   background-repeat: no-repeat;
@@ -27,4 +28,15 @@ body {
   right: 0;
   bottom: 0;
   opacity: 0.1;
+} */
+
+/* MUI tooltip style */
+.MuiTooltip-tooltip {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 1em;
+  padding: 4px 15px;
+}
+.MuiTooltip-arrow {
+  color: rgba(0, 0, 0, 0.8);
 }

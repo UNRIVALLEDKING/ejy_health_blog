@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import ContentEditModal from './ContentEditModal';
+import VideoResolver from './VideoResolver';
 export default function ContentRenderer({ content, setContent }) {
   const [editData, setEditData] = useState(null);
 
@@ -76,7 +77,7 @@ export default function ContentRenderer({ content, setContent }) {
               width={100}
               height={100}
               className="w-full h-full my-4"
-              src={item.data.src}
+              src={item.data.tempSrc}
               alt={item.data.alt}
             />
           );
@@ -98,6 +99,8 @@ export default function ContentRenderer({ content, setContent }) {
               />
             </div>
           );
+        } else if (item.type === 'video') {
+          return <VideoResolver key={index} videoData={item} />;
         }
       })}
     </div>

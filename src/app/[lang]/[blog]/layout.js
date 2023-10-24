@@ -1,10 +1,19 @@
 import { MAIN_URL } from '@/constants/constant';
-import { BlogData } from './blogData';
+import { GetRequest } from '@/constants/functions';
+// import { BlogData } from './blogData';
+
+const getBlogData = await GetRequest('/p/all');
+const blogData = getBlogData.fetchData.posts;
 
 export async function generateMetadata({ params }) {
   const { blog } = params;
-  console.log('params', params);
-  const data = BlogData.find((item) => item.url === blog);
+  // console.log('params', params);
+
+  const data = await blogData.find((item) => {
+    // console.log('item url', item.url);
+    return item.url === blog;
+  });
+  console.log('data', data);
   const url = `${MAIN_URL}${params.lang}/${blog}`;
   return {
     title: data.title,
@@ -24,7 +33,8 @@ export async function generateMetadata({ params }) {
 }
 
 export async function generateStaticParams() {
-  const data = BlogData.map((blog) => ({
+  // console.log('blog', blogData);
+  const data = blogData.map((blog) => ({
     BlogData: blog.url,
   }));
   return data;

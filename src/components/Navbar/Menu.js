@@ -1,3 +1,5 @@
+import { BiSolidEdit } from 'react-icons/bi';
+
 const navMenu = [
   {
     id: 0,
@@ -23,6 +25,11 @@ const navMenu = [
     id: 4,
     title: 'Blog',
     url: '/',
+  },
+  {
+    id: 5,
+    title: <BiSolidEdit size={30} />,
+    url: '/editor',
   },
 ];
 export default navMenu;

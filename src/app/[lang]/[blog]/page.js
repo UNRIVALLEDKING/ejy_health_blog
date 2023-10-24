@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { BlogData } from './blogData';
+// import { BlogData } from './blogData';
 import { verifiedIcon } from '@/assets/BlogCards';
 import HomeCards from '@/components/Cards/HomeCards';
 
@@ -12,55 +12,43 @@ import {
   BsWhatsapp,
 } from 'react-icons/bs';
 import { HiMail } from 'react-icons/hi';
-import { MAIN_URL } from '@/constants/constant';
+import { IMAGE_HOST, MAIN_URL } from '@/constants/constant';
 import CopyURL from '@/components/CopyURL';
 import { ToastContainer } from 'react-toastify';
 import { ejyHealthLogo } from '@/assets';
+import { GetRequest, calculateReadTime } from '@/constants/functions';
+import VideoResolver from '@/components/editor/VideoResolver';
 
-export default function page({ params }) {
+export default async function page({ params }) {
   const { blog } = params;
 
-  // console.log('params', params);
-  const pageData = BlogData.find((item) => item.url === blog);
+  console.log('params blog', blog);
+  const blogData = await GetRequest(`/p/single-post/${blog}`);
+  const pageData = blogData.fetchData.post;
+  // const pageData = await BlogData.find((item) => {
+  //   console.log(item.url);
+  //   return item.url === blog;
+  // });
+  console.log('pageData', pageData.body);
   const blogUrl = encodeURIComponent(
     MAIN_URL + params.lang + '/' + pageData.url
   );
-  function calculateReadingTime() {
-    const wordsPerMinute = 200;
-    const content = pageData.content;
 
-    const filteredContent = content.filter(
-      (item) => item.type === 'paragraph' || item.type === 'list'
-    );
-
-    const totalWords = filteredContent.reduce((total, item) => {
-      if (item.type === 'paragraph') {
-        const words = item.text.replace(/<[^>]+>/g, '').split(/\s+/);
-        return total + words.length;
-      } else if (item.type === 'list') {
-        const listItems = item.text.split('<li>').filter(Boolean);
-        return total + listItems.length;
-      }
-      return total;
-    }, 0);
-
-    const readingTimeMinutes = Math.ceil(totalWords / wordsPerMinute);
-
-    return readingTimeMinutes;
-  }
-
-  const readTime = calculateReadingTime();
+  const readTime = calculateReadTime(pageData.body);
   return (
-    <div className={`text-black bg-transparent md:pb-20 blogMain`}>
+    <div className={`text-black w-full bg-transparent md:pb-20 blogMain`}>
       <ToastContainer />
       <div className="container xl:max-w-[80vw] relative mx-auto flex flex-row px-4 xl:gap-x-4">
         <div className="w-full mx-auto xl:max-w-[80vw]">
-          <div>
+          <div className="w-full h-auto relative">
             <Image
-              className="w-full"
-              src={pageData.thumbnail}
+              className="!w-full !h-full relative"
+              width={1000}
+              height={1000}
+              src={IMAGE_HOST + pageData.thumbnail}
               alt={pageData.title}
             />
+            {console.log('hdasj', IMAGE_HOST + pageData.thumbnail)}
             <div className="my-3 gap-2 flex items-center text-sm">
               <span className="border-[#027A48] text-[#027A48] border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
                 <Image
@@ -70,12 +58,15 @@ export default function page({ params }) {
                 />{' '}
                 Verified
               </span>
-              <span className="border-stone-700 text-stone-700 border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
-                Case-Study
-              </span>
-              <span className="border-stone-700 text-stone-700 border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
-                Kid&apos;s Care
-              </span>
+              {pageData.tags.map((item) => (
+                <span
+                  key={item._id}
+                  style={{ borderColor: item.color }}
+                  className={`whitespace-nowrap text-stone-700 border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full`}
+                >
+                  {item.name}
+                </span>
+              ))}
             </div>
             <h1 className="my-3 text-2xl xl:text-5xl font-bold tracking-wider xl:mb-6">
               {pageData.title}
@@ -152,7 +143,7 @@ export default function page({ params }) {
             </div>
           </div>
 
-          {pageData.content.map((item, index) => {
+          {pageData.body.map((item, index) => {
             if (item.type === 'paragraph') {
               const renderHTML = (htmlString) => {
                 return { __html: htmlString };
@@ -173,21 +164,14 @@ export default function page({ params }) {
                 >
                   <Image
                     //   placeholder="blur"
-                    className="my-4 w-full"
+                    className="my-4 w-full h-full"
                     //   blurDataURL={item.src.blurDataURL}
-                    src={item.src.src}
-                    alt={item.alt}
-                    width={item.src.width}
-                    height={item.src.height}
+                    src={IMAGE_HOST + item.data.src}
+                    alt={item.alt + pageData.title}
+                    width={1000}
+                    height={1000}
                   />
                   <p className="text-center">{item.caption}</p>
-                </div>
-              );
-            } else if (item.type === 'video') {
-              return (
-                <div key={index}>
-                  <video src={item.src} controls />
-                  <p>{item.caption}</p>
                 </div>
               );
             } else if (item.type === 'h2') {
@@ -208,6 +192,8 @@ export default function page({ params }) {
                   {item.text}
                 </h3>
               );
+            } else if (item.type === 'video') {
+              return <VideoResolver key={index} videoData={item} />;
             }
           })}
           <div className="mt-20 text-right">
@@ -221,13 +207,7 @@ export default function page({ params }) {
             <p className="text-sm">{pageData.date}</p>
           </div>
         </div>
-        <div className="hidden xl:w-[25%] xl:flex gap-2 flex-col">
-          <HomeCards />
-          <HomeCards />
-          <HomeCards />
-          <HomeCards />
-          <HomeCards />
-        </div>
+        <div className="hidden xl:w-[25%] xl:flex gap-2 flex-col"></div>
       </div>
     </div>
   );

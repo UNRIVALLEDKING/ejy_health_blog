@@ -5,12 +5,18 @@ import ContentForm from './ContentForm';
 import ContentRenderer from './ContentRenderer';
 import EditorDashboard from './EditorDashboard';
 import ThumbnailImage from './ThumbnailImage';
-import Image from 'next/image';
-import { verifiedIcon } from '@/assets/BlogCards';
+// import Image from 'next/image';
+// import { verifiedIcon } from '@/assets/BlogCards';
 import ImageUploadModal from './ImageUploadModal';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { PostRequest, calculateReadTime } from '@/constants/functions';
+import {
+  PostRequest,
+  awsImageUpload,
+  calculateReadTime,
+} from '@/constants/functions';
+import FormLoader from './FormLoader';
+import TagEditor from './TagEditor';
 
 export default function Editor() {
   const [title, setTitle] = useState('');
@@ -21,8 +27,9 @@ export default function Editor() {
   const [currentItem, setCurrentItem] = useState('');
   const [currentItemType, setCurrentItemType] = useState('');
   const [listType, setListType] = useState('lower-roman');
-  const [formData, setFormData] = useState({});
   const [userData, setUserData] = useState(null);
+  const [imageState, setImageState] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const router = useRouter();
 
@@ -32,18 +39,7 @@ export default function Editor() {
     year: 'numeric',
   });
 
-  // const userId = localStorage.getItem('id') || sessionStorage.getItem('id');
   const handleAddItem = () => {
-    const tempFormData = {
-      title: title,
-      desc: desc,
-      Thumbnail: 'thumbnailImg',
-      content: content,
-      user: userData.id,
-      tags: selectedTags,
-      category: '653289882d082f726fee5849',
-    };
-
     if (currentItemType === 'paragraph' && currentItem) {
       let linkText = currentItem.replace(
         /\[(.*?)\]\((.*?)\)/g,
@@ -70,21 +66,22 @@ export default function Editor() {
       }
       setContent(newContent);
       setCurrentItem('');
+    } else if (currentItemType === 'video' && currentItem) {
+      const youtubeUrlPattern =
+        /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|shorts\/|embed\/|v\/|user\/\S+|channel\/\S+|c\/\S+|)\S{11}/;
+
+      if (!youtubeUrlPattern.test(currentItem)) {
+        toast.warning('Please enter a valid YouTube URL.');
+      } else {
+        setContent([...content, { type: currentItemType, text: currentItem }]);
+        setCurrentItem('');
+      }
     } else {
       if (currentItem) {
         setContent([...content, { type: currentItemType, text: currentItem }]);
         setCurrentItem('');
       }
     }
-    setFormData(tempFormData, { content: content });
-  };
-  const handleTags = (e) => {
-    const string = e.target.value;
-    const array = string
-      .split(',')
-      .map((tag) => tag.trim())
-      .filter(Boolean);
-    setSelectedTags(array);
   };
 
   console.log('blog data', content);
@@ -92,16 +89,38 @@ export default function Editor() {
   async function handlePublish(e) {
     e.preventDefault();
 
+    setLoader('Uploading Images');
+    const thumbnailWithCaption = {
+      object: thumbnailImg.object,
+      caption: title,
+    };
+    const updatedThumbnail = await awsImageUpload(thumbnailWithCaption);
+    const updatedContent = await Promise.all(
+      content.map(async (item) => {
+        if (item.type === 'image') {
+          return {
+            type: 'image',
+            data: await awsImageUpload(item.data),
+          };
+        } else {
+          return item;
+        }
+      })
+    );
+    console.log('url', updatedContent);
+    console.log('thumbnailImg', thumbnailImg);
+    console.log('updatedThumbnail', updatedThumbnail);
+    setLoader('Uploading Blog Data');
+
     const tempFormData = {
       title: title,
       desc: desc,
-      thumbnail: 'https://files.catbox.moe/mug3bj.png',
-      body: content,
+      thumbnail: updatedThumbnail.src,
+      body: updatedContent,
       user: userData.id,
       keywords: selectedTags,
     };
-    setFormData(tempFormData);
-    console.log('form data', tempFormData);
+    console.log('updatedConte', updatedContent);
     try {
       const postData = await PostRequest(
         '/admin/blogs/create-post',
@@ -117,7 +136,9 @@ export default function Editor() {
     } catch (err) {
       console.log('err', err);
     }
-    // console.log('data', tempFormData);
+    setTimeout(() => {
+      setLoader(false);
+    }, 2000);
   }
 
   const readTime = calculateReadTime(content);
@@ -136,10 +157,19 @@ export default function Editor() {
       router.push('/login');
     }
   }, []);
+  console.log('seleeeee', selectedTags);
   return (
     <>
+      {loader ? (
+        <>
+          <FormLoader loader={loader} />
+        </>
+      ) : (
+        <></>
+      )}
       {currentItemType === 'image' ? (
         <ImageUploadModal
+          setImageState={setImageState}
           setCurrentItemType={setCurrentItemType}
           setCurrentItem={setCurrentItem}
           setContent={setContent}
@@ -157,28 +187,9 @@ export default function Editor() {
         onChange={(e) => setTitle(e.target.value)}
       />
 
-      <div className="my-3 gap-2 flex flex-wrap items-center text-base">
-        <span className="border-[#027A48] text-[#027A48] border-solid cursor-pointer border-[1px] py-1 px-2 rounded-full">
-          <Image className="inline" src={verifiedIcon} alt="verified icon" />{' '}
-          Verified
-        </span>
-
-        {selectedTags.map((item, id) => (
-          <span
-            key={id}
-            className="border-stone-700 whitespace-nowrap text-stone-700 border-solid border-[1px] py-1 px-2 rounded-full"
-          >
-            {item}{' '}
-            <button className="border-[0.5px] rounded-full px-2 border-gray-600">
-              x
-            </button>
-          </span>
-        ))}
-      </div>
-      <textarea
-        onChange={(e) => handleTags(e)}
-        placeholder="Use , (comma) as tag seperator"
-        className="w-full mt-2 p-2 outline-none"
+      <TagEditor
+        selectedTags={selectedTags}
+        setSelectedTags={setSelectedTags}
       />
 
       <textarea
@@ -206,7 +217,10 @@ export default function Editor() {
       />
 
       {/* Content Format selector dashboard */}
-      <EditorDashboard setCurrentItemType={setCurrentItemType} />
+      <EditorDashboard
+        imageState={imageState}
+        setCurrentItemType={setCurrentItemType}
+      />
       <div className="text-right">
         <button
           onClick={handlePublish}

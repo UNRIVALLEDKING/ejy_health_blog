@@ -5,10 +5,15 @@ import navMenu from './Menu';
 
 export default function Hamburger() {
   const [toggle, setToggle] = useState(false);
+
+  const toggleMenu = () => {
+    setToggle(!toggle);
+  };
+
   return (
     <div>
       <button
-        onClick={() => setToggle(!toggle)}
+        onClick={toggleMenu}
         className="z-[99999] flex flex-col gap-1"
         aria-label="Toggle Button"
       >
@@ -28,19 +33,22 @@ export default function Hamburger() {
           }`}
         ></div>
       </button>
+
       <div
-        className={`fixed left-0 top-0 transition-all duration-300 flex flex-col items-center w-full ${
-          toggle ? 'h-[220px]' : 'h-0'
-        }  mt-16 bg-white border-y-[0.25px] border-solid border-black`}
+        className={`fixed left-0 top-0 flex flex-col w-full items-center gap-1 pb-2 transition-all duration-500 mt-16 bg-white border-b-[0.25px] border-solid border-black`}
+        style={{
+          visibility: toggle ? 'visible' : 'hidden',
+          opacity: toggle ? 1 : 0,
+          maxHeight: toggle ? '100%' : '0',
+          overflow: toggle ? 'visible' : 'hidden',
+        }}
       >
         {navMenu.map((item) => (
           <Link
             key={item.id}
             href={item.url}
-            onClick={() => setToggle(!toggle)}
+            onClick={toggleMenu}
             className={`text-xl transition-all duration-200 pt-1 ${
-              toggle ? 'opacity-100 transition-all delay-150' : 'opacity-0'
-            } ${
               item.title === 'Blog'
                 ? 'text-red-600'
                 : 'text-black hover:text-black'
@@ -51,9 +59,7 @@ export default function Hamburger() {
         ))}
         <Link
           href={'/login'}
-          className={`bg-[#ff0000] ${
-            toggle ? 'opacity-100 transition-all delay-150' : 'opacity-0'
-          } hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2`}
+          className={`bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2`}
         >
           Login
         </Link>

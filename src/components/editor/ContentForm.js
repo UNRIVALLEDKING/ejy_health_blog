@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 export default function ContentForm({
   currentItemType,
   currentItem,
@@ -50,6 +52,16 @@ export default function ContentForm({
             className="w-full outline-none text-black text-base xl:text-lg tracking-wide leading-8 my-4"
           />
         </>
+      ) : currentItemType === 'video' ? (
+        <>
+          <input
+            onChange={(e) => setCurrentItem(e.target.value)}
+            value={currentItem}
+            className="w-full outline-none text-black text-base xl:text-lg tracking-wide leading-8 my-4"
+            type="text"
+            placeholder="Enter youtube Video link"
+          />
+        </>
       ) : (
         <></>
       )}
@@ -61,9 +73,15 @@ export default function ContentForm({
           Add
         </button>
       ) : (
-        <p className="text-center text-xl text-gray-500 mt-10">
-          Start by selecting content type first
-        </p>
+        <>
+          <p className="text-center text-xl text-gray-500 mt-10">
+            Start by selecting content type first
+          </p>
+          <span className="text-red-600 text-base text-left">
+            Note : Maximum 2 Images can be uploaded in 1 Blog excluding
+            thumbnail Image.
+          </span>
+        </>
       )}
     </div>
   );

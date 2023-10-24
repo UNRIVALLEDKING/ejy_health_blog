@@ -6,7 +6,7 @@ import { GetRequest } from '@/constants/functions';
 
 export default async function Home() {
   const blogData = await GetRequest('/p/all');
-  console.log('data', blogData.fetchData.posts);
+  // console.log('data', blogData.fetchData.posts);
   return (
     <>
       <h2
@@ -23,15 +23,6 @@ export default async function Home() {
         {blogData?.fetchData.posts.map((item, id) => (
           <HomeCards key={id} item={item} />
         ))}
-        <HomeCards />
-        <HomeCards />
-        <HomeCards />
-        <HomeCards />
-        <HomeCards />
-        <HomeCards />
-        <HomeCards />
-        <HomeCards />
-        <HomeCards />
       </div>
 
       <button className="my-10 bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2">

@@ -1,11 +1,21 @@
-import { Upload } from '@aws-sdk/lib-storage';
-import { S3 } from '@aws-sdk/client-s3';
 import { TEST_API } from './constant';
+import {
+  DeleteObjectsCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 
-const s3 = new S3({
-  accessKeyId: process.env.AWS_S3_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
-  region: process.env.AWS_S3_REGION,
+const accessKeyId = process.env.AWS_S3_ACCESS_KEY;
+const secretAccessKey = process.env.AWS_S3_SECRET_ACCESS_KEY;
+const region = process.env.AWS_S3_REGION;
+const bucketName = process.env.AWS_S3_BUCKET_NAME;
+
+const s3Client = new S3Client({
+  region: region,
+  credentials: {
+    accessKeyId: accessKeyId,
+    secretAccessKey: secretAccessKey,
+  },
 });
 
 async function GetRequest(endPoint, authToken = '') {
@@ -18,7 +28,7 @@ async function GetRequest(endPoint, authToken = '') {
     const res = await fetch(TEST_API + endPoint, { headers });
     const status = res.status;
     const fetchData = await res.json();
-    console.log('res', fetchData);
+    // console.log('res', fetchData);
     return { status, fetchData };
   } catch (err) {
     return { error: err };
@@ -51,61 +61,116 @@ async function PostRequest(endPoint, FormData, authToken = '') {
   }
 }
 
+async function DeleteRequest(endPoint, authToken = '') {
+  const headers = {
+    'Content-Type': 'application/json',
+    deviceIdentifier: 'Yahallo!',
+  };
+  if (authToken) {
+    headers['Authorization'] = `Bearer ${authToken}`;
+  }
+  try {
+    const res = await fetch(TEST_API + endPoint, {
+      method: 'DELETE',
+      headers,
+    });
+    const data = await res.json();
+    const status = res.status;
+    // console.log('resData', data);
+    return { status: status, data: data };
+  } catch (err) {
+    return err;
+  }
+}
+
 async function awsImageUpload(file) {
   if (!file) return;
+  const { object, caption } = file;
+  // console.log('hhh', object);
+  const sanitizedCaption = caption.replace(/ /g, '-').toLowerCase();
+  const randomString = Math.random().toString().substring(2, 8);
+  console.log('object TYpe', object);
+  const imageUrl = `blog-images/ejy-health-${
+    sanitizedCaption + randomString + object.name
+  }`;
+
   const params = {
-    Bucket: 'ejy-blog-images',
-    Key: file.name,
-    Body: file,
+    Bucket: bucketName,
+    Key: imageUrl,
+    Body: object,
+    ContentType: object.type,
   };
+  // return imageUrl;
 
   try {
-    const upload = new Upload({
-      client: s3,
-      params,
-    });
-    upload.on('httpUploadProgress', (p) => {
-      console.log(p.loaded / p.total);
-    });
-    await upload.promise();
+    const upload = new PutObjectCommand(params);
+    // upload.on('httpUploadProgress', (p) => {
+    //   console.log(p.loaded / p.total);
+    // });
+    console.log('s3Client', s3Client);
+    console.log('uploadData', upload);
+
+    const data = await s3Client.send(upload);
+    console.log('AWS image upload data', data);
     console.log(`File uploaded successfully: ${file.name}`);
-    return file.name;
+    console.log('srs', imageUrl, caption);
+    return { src: imageUrl, caption };
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+}
+
+async function awsImageDelete(images) {
+  const command = new DeleteObjectsCommand({
+    Bucket: bucketName,
+    Delete: {
+      // Objects: [{ Key: 'object1.txt' }, { Key: 'object2.txt' }],
+      Objects: images,
+    },
+  });
+
+  try {
+    const { Deleted } = await s3Client.send(command);
+    console.log(
+      `Successfully deleted ${Deleted.length} objects from S3 bucket. Deleted objects:`
+    );
+    console.log(Deleted.map((d) => ` • ${d.Key}`).join('\n'));
+    return Deleted;
   } catch (err) {
     console.error(err);
+    return err;
   }
 }
 
 function calculateReadTime(content) {
   const readingSpeed = 80; // words per minute
-  const listItems = content
-    .filter((item) => item.type === 'list')
-    .map((item) => {
-      const parsedItem = item.text.replace(/<[^>]*>/g, '');
-      // console.log('list parsed', parsedItem);
-      return parsedItem;
-    });
 
-  const paragraphs = content
-    .filter(
-      (item) =>
-        item.type === 'paragraph' || item.type === 'h2' || item.type === 'h3'
-    )
-    .map((item) => {
-      console.log('item', item);
-      const parsedItem = item.text.replace(/<[^>]*>/g, '');
-      // console.log('para parsed', parsedItem);
-      return parsedItem;
-    });
+  const validItems = content.filter(
+    (item) =>
+      item.type === 'paragraph' ||
+      item.type === 'h2' ||
+      item.type === 'h3' ||
+      item.type === 'list'
+  );
 
-  const totalWords =
-    listItems.join(' ').split(' ').length +
-    paragraphs.join(' ').split(' ').length;
+  const totalWords = validItems.reduce((wordCount, item) => {
+    const parsedItem = item.text.replace(/<[^>]*>/g, '');
+    return wordCount + parsedItem.split(' ').length;
+  }, 0);
 
   const readTimeInMinutes = totalWords / readingSpeed;
 
-  const readTimeInMinutesRoundedUp = Math.ceil(readTimeInMinutes);
+  const readTimeInMinutesRoundedUp = Math.ceil(Math.max(1, readTimeInMinutes));
 
   return readTimeInMinutesRoundedUp;
 }
 
-export { GetRequest, PostRequest, awsImageUpload, calculateReadTime };
+export {
+  GetRequest,
+  PostRequest,
+  awsImageUpload,
+  awsImageDelete,
+  calculateReadTime,
+  DeleteRequest,
+};

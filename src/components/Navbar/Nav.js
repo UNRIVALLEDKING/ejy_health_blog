@@ -69,7 +69,7 @@ export default function Nav() {
           </Link>
         )}
       </div>
-      <div className="flex xl:hidden w-full px-2 justify-between items-center">
+      <div className="flex xl:hidden w-full px-2 pb-1 justify-between items-center border-b-[0.25px] border-solid border-black">
         <Link href="/" className="flex flex-row items-center gap-2">
           <Image className="w-10" src={ejyHealthLogo} alt={title} />
           <h1 className="text-2xl text-black tracking-wider font-semibold">
