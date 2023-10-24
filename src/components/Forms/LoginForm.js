@@ -51,7 +51,7 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={loginUser}
-      className="w-1/2 flex flex-col border border-black p-4"
+      className="w-full xl:w-1/2 flex flex-col border border-black p-4"
     >
       <input
         required

@@ -58,6 +58,7 @@ export default function Hamburger() {
           </Link>
         ))}
         <Link
+          onClick={toggleMenu}
           href={'/login'}
           className={`bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2`}
         >
