@@ -10,11 +10,6 @@ const secretAccessKey = env.AWS_S3_SECRET_ACCESS_KEY;
 const region = env.AWS_S3_REGION;
 const bucketName = env.AWS_S3_BUCKET_NAME;
 
-console.log('accessKeyId', accessKeyId);
-console.log('accessKeyId', secretAccessKey);
-console.log('accessKeyId', region);
-console.log('accessKeyId', bucketName);
-
 const s3Client = new S3Client({
   region: region,
   credentials: {
