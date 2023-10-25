@@ -1,14 +1,19 @@
-import { TEST_API } from './constant';
+import { TEST_API, env } from './constant';
 import {
   DeleteObjectsCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
 
-const accessKeyId = process.env.AWS_S3_ACCESS_KEY;
-const secretAccessKey = process.env.AWS_S3_SECRET_ACCESS_KEY;
-const region = process.env.AWS_S3_REGION;
-const bucketName = process.env.AWS_S3_BUCKET_NAME;
+const accessKeyId = env.AWS_S3_ACCESS_KEY;
+const secretAccessKey = env.AWS_S3_SECRET_ACCESS_KEY;
+const region = env.AWS_S3_REGION;
+const bucketName = env.AWS_S3_BUCKET_NAME;
+
+console.log('accessKeyId', accessKeyId);
+console.log('accessKeyId', secretAccessKey);
+console.log('accessKeyId', region);
+console.log('accessKeyId', bucketName);
 
 const s3Client = new S3Client({
   region: region,
