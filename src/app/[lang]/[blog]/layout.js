@@ -44,7 +44,7 @@ export async function generateStaticParams() {
       BlogData: blog.url,
     }));
     return data;
-  } else return;
+  } else return [];
 }
 
 export default function Layout({ children }) {

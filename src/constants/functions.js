@@ -18,9 +18,9 @@ const s3Client = new S3Client({
     secretAccessKey: secretAccessKey,
   },
 });
-console.log('reggg', region);
-console.log('bucketName', bucketName);
-console.log('folder', folder);
+// console.log('reggg', region);
+// console.log('bucketName', bucketName);
+// console.log('folder', folder);
 
 async function GetRequest(endPoint, authToken = '') {
   try {
