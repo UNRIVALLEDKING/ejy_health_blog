@@ -1,19 +1,25 @@
 import { MAIN_URL } from '@/constants/constant';
 import { GetRequest } from '@/constants/functions';
-// import { BlogData } from './blogData';
 
+let blogData = [];
+
+console.log('blog', blogData);
 const getBlogData = await GetRequest('/p/all');
-const blogData = getBlogData.fetchData.posts;
+if (getBlogData.fetchData && getBlogData.fetchData.posts) {
+  blogData = getBlogData.fetchData.posts;
+}
+console.log('blog', blogData);
 
 export async function generateMetadata({ params }) {
   const { blog } = params;
-  // console.log('params', params);
 
-  const data = await blogData?.find((item) => {
-    // console.log('item url', item.url);
-    return item.url === blog;
-  });
-  console.log('data', data);
+  // Find the data for the specified blog in blogData
+  const data = blogData.find((item) => item.url === blog);
+
+  if (!data) {
+    return;
+  }
+
   const url = `${MAIN_URL}${params.lang}/${blog}`;
   return {
     title: data.title,
@@ -33,13 +39,14 @@ export async function generateMetadata({ params }) {
 }
 
 export async function generateStaticParams() {
-  // console.log('blog', blogData);
-  const data = blogData?.map((blog) => ({
-    BlogData: blog.url,
-  }));
-  return data;
+  if (blogData.length > 0) {
+    const data = blogData.map((blog) => ({
+      BlogData: blog.url,
+    }));
+    return data;
+  } else return;
 }
 
-export default function layodut({ children }) {
+export default function Layout({ children }) {
   return <>{children}</>;
 }
