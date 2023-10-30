@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
   const { blog } = params;
   // console.log('params', params);
 
-  const data = await blogData.find((item) => {
+  const data = await blogData?.find((item) => {
     // console.log('item url', item.url);
     return item.url === blog;
   });
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }) {
 
 export async function generateStaticParams() {
   // console.log('blog', blogData);
-  const data = blogData.map((blog) => ({
+  const data = blogData?.map((blog) => ({
     BlogData: blog.url,
   }));
   return data;
