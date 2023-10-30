@@ -11,6 +11,9 @@ module.exports = {
         // 'ejyHealth':"url()"
       },
     },
+    container: {
+      padding: '2rem',
+    },
   },
   plugins: [],
 };
