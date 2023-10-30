@@ -20,7 +20,7 @@ export default async function Home() {
         <HomeTopics />
       </div>
 
-      {blogData?.fetchData.posts.length > 0 ? (
+      {blogData?.fetchData?.posts?.length > 0 ? (
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 w-full mt-10 px-4 xl:px-0">
           {blogData.fetchData.posts.map((item, id) => (
             <HomeCards key={id} item={item} />
