@@ -9,6 +9,7 @@ const accessKeyId = env.AWS_S3_ACCESS_KEY;
 const secretAccessKey = env.AWS_S3_SECRET_ACCESS_KEY;
 const region = env.AWS_S3_REGION;
 const bucketName = env.AWS_S3_BUCKET_NAME;
+const folder = env.AWS_S3_FOLDER_NAME;
 
 const s3Client = new S3Client({
   region: region,
@@ -17,10 +18,15 @@ const s3Client = new S3Client({
     secretAccessKey: secretAccessKey,
   },
 });
+console.log('reggg', region);
+console.log('bucketName', bucketName);
+console.log('folder', folder);
 
 async function GetRequest(endPoint, authToken = '') {
   try {
-    const headers = {};
+    const headers = {
+      deviceIdentifier: 'Yahallo!',
+    };
     if (authToken) {
       headers['Authorization'] = `Bearer ${authToken}`;
     }
@@ -31,7 +37,7 @@ async function GetRequest(endPoint, authToken = '') {
     // console.log('res', fetchData);
     return { status, fetchData };
   } catch (err) {
-    return { error: err };
+    return { error: err, fetchData: [] };
   }
 }
 
@@ -45,7 +51,7 @@ async function PostRequest(endPoint, FormData, authToken = '') {
   }
   // console.log('endPoint', endPoint);
   // console.log('formData', FormData);
-  // console.log('authToken', authToken);
+  // console.log('headers', headers);
   try {
     const res = await fetch(TEST_API + endPoint, {
       method: 'POST',
@@ -83,6 +89,28 @@ async function DeleteRequest(endPoint, authToken = '') {
   }
 }
 
+async function PutRequest(endPoint, formData, authToken) {
+  const headers = {
+    'Content-Type': 'application/json',
+    deviceIdentifier: 'Yahallo!',
+  };
+  if (authToken) {
+    headers['Authorization'] = `Bearer ${authToken}`;
+  }
+  try {
+    const res = await fetch(TEST_API + endPoint, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    const status = res.status;
+    return { status: status, data: data };
+  } catch (err) {
+    return err;
+  }
+}
+
 async function awsImageUpload(file) {
   if (!file) return;
   const { object, caption } = file;
@@ -90,7 +118,7 @@ async function awsImageUpload(file) {
   const sanitizedCaption = caption.replace(/ /g, '-').toLowerCase();
   const randomString = Math.random().toString().substring(2, 8);
   console.log('object TYpe', object);
-  const imageUrl = `blog-images/ejy-health-${
+  const imageUrl = `${folder}/ejy-health-${
     sanitizedCaption + randomString + object.name
   }`;
 
@@ -173,4 +201,5 @@ export {
   awsImageDelete,
   calculateReadTime,
   DeleteRequest,
+  PutRequest,
 };

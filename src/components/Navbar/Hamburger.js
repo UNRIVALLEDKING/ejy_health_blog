@@ -57,13 +57,14 @@ export default function Hamburger() {
             {item.title}
           </Link>
         ))}
-        <Link
+        {/* <Link
           onClick={toggleMenu}
           href={'/login'}
           className={`bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2`}
         >
           Login
-        </Link>
+        </Link> */}
+        <button className="btn-primary">Join Waitlist</button>
       </div>
     </div>
   );

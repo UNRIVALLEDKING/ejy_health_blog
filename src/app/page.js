@@ -6,7 +6,8 @@ import { GetRequest } from '@/constants/functions';
 
 export default async function Home() {
   const blogData = await GetRequest('/p/all');
-  // console.log('data', blogData.fetchData.posts);
+  // console.log('data', blogData.fetchData);
+
   return (
     <>
       <h2
@@ -19,11 +20,17 @@ export default async function Home() {
         <HomeTopics />
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 w-full mt-10 px-4 xl:px-0">
-        {blogData?.fetchData.posts.map((item, id) => (
-          <HomeCards key={id} item={item} />
-        ))}
-      </div>
+      {blogData.fetchData.posts.length > 0 ? (
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 w-full mt-10 px-4 xl:px-0">
+          {blogData.fetchData.posts.map((item, id) => (
+            <HomeCards key={id} item={item} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center w-full mt-4 text-xl">
+          No Blogs Available Yet
+        </p>
+      )}
 
       <button className="my-10 bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2">
         Load More Gyan

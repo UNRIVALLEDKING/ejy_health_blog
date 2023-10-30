@@ -4,9 +4,9 @@ import Editor from '@/components/editor/Editor';
 export default function page() {
   return (
     <>
-      <div className="bg-white text-black md:pb-20">
-        <div className="container xl:max-w-[80vw] relative mx-auto flex flex-row px-4 xl:gap-x-4">
-          <div className="w-[80%] w-full xl:max-w-[80vw]">
+      <div className="bg-white w-full text-black md:pb-20">
+        <div className="container w-full xl:max-w-[80vw] relative mx-auto flex flex-row px-4 xl:gap-x-4">
+          <div className="w-full xl:w-[75%]">
             <Editor />
           </div>
           <div className="hidden xl:w-[25%] xl:flex gap-2 flex-col">

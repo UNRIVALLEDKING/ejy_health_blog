@@ -8,7 +8,7 @@ import { Inter } from 'next/font/google';
 import Hamburger from './Hamburger';
 import { useEffect, useState } from 'react';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export default function Nav() {
   const [isLoggedIn, setIsLoggedIn] = useState([]);
@@ -53,7 +53,8 @@ export default function Nav() {
             </Link>
           ))}
         </div>
-        {isLoggedIn?.user ? (
+        <div className="btn-primary">Join Waitlist</div>
+        {/* {isLoggedIn?.user ? (
           <Link
             href={`/profile/${isLoggedIn?.id}`}
             className="bg-[#ff0000] hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2"
@@ -67,7 +68,7 @@ export default function Nav() {
           >
             Login
           </Link>
-        )}
+        )} */}
       </div>
       <div className="flex xl:hidden w-full px-2 pb-1 justify-between items-center border-b-[0.25px] border-solid border-black">
         <Link href="/" className="flex flex-row items-center gap-2">

@@ -40,3 +40,14 @@ body {
 .MuiTooltip-arrow {
   color: rgba(0, 0, 0, 0.8);
 }
+
+/* Tailwind Directives */
+
+@layer components {
+  .input-text {
+    @apply text-black mt-4 w-full rounded-lg px-2 outline-[#ff0000] text-base xl:text-lg tracking-wider font-medium leading-8;
+  }
+  .btn-primary {
+    @apply bg-[#ff0000] cursor-pointer mt-4 hover:scale-[1.01] transition-all text-white text-xl rounded-lg px-3 py-2;
+  }
+}

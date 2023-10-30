@@ -9,7 +9,7 @@ const navMenu = [
   {
     id: 1,
     title: 'Events',
-    url: 'https://ejyhealth.in/events',
+    url: 'https://events.ejyhealth.in/',
   },
   {
     id: 2,

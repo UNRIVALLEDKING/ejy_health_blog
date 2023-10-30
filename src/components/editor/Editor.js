@@ -159,10 +159,10 @@ export default function Editor() {
   }, []);
   console.log('seleeeee', selectedTags);
   return (
-    <>
+    <div className="w-full">
       {loader ? (
         <>
-          <FormLoader loader={loader} />
+          <FormLoader LoadingMessage={loader} />
         </>
       ) : (
         <></>
@@ -229,6 +229,6 @@ export default function Editor() {
           Publish
         </button>
       </div>
-    </>
+    </div>
   );
 }
